@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React,{useState,createContext, useEffect} from 'react'
+import Generateqr from './Generateqr.js';
+import Scanqr from './Scanqr.js';
+import Takepic  from './Takepic.js';
+export const AllContexts=createContext();
 function App() {
+  const [pg ,setPg] = useState(1);
+  const movePgs=(val)=>{
+    setPg(val);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      
+      <AllContexts.Provider value={{pg , movePgs}}>
+      {pg === 1 && <div><button onClick={()=>{setPg(2)}}>Generate Qr</button>
+        <button onClick={()=>{setPg(3)}}>Scanqr</button>
+      </div>}
+      {pg === 2 && <Generateqr/>}
+      {pg === 3 && <Scanqr/>}
+      {pg === 4 && <Takepic/>}
+        </AllContexts.Provider>
   );
 }
 
